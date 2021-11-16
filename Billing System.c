@@ -7,13 +7,13 @@
 #include<conio.h>
 #include<windows.h>//                   AS IT IS RUNNED IN WINDOWS 
 //                                              ALL FUNCTIONS
-void createc();
+void create_customer();
 void display();
-void editc();
-void createi();
-void updi();
+void edit_customer();
+void create_item();
+void update_item();
 int bill(int k);
-int existc();
+int customer_exists();
 int exist(char new[11]);
 char existcb(char new[11]);
 int existi(char new[11]);
@@ -24,9 +24,9 @@ int indexOfi2(FILE *fptr, char *newi,int *line, int *col);
 int indexOfi4(FILE *fptr,char *i,int *line, int *col);
 int indexOf2b(FILE *fptr, const char *NEW, int *line, int *col);
 int existi2(char i[8],int k);
-void iname(int line);
-void iquan(int line);
-void iprice(int line);
+void item_name(int line);
+void item_quantity(int line);
+void item_price(int line);
 //                                          DEFINING VARIABLES ANG STRUCTURES                                            
 #define MAX 256
 #define BUFFER_SIZE 1000
@@ -128,11 +128,11 @@ int main()
 		            scanf("%d",&o);
 		            switch(o)
 		            {
-        		        case 1:createc();
+        		        case 1:create_customer();
         			        goto q;
-  			            case 2:editc();
+  			            case 2:edit_customer();
   			                goto q;
-                        case 3:createi();
+                        case 3:create_item();
         			        goto q;
                         case 4:display();
                             goto q;     
@@ -164,7 +164,7 @@ int main()
     }
 }
 
-void createc()
+void create_customer()
 {     //                                        CREATE CUSTOMER DETAILS
 	int i=0;int n=0;char new[11];
 	FILE *fp;
@@ -232,7 +232,7 @@ int indexOf(FILE *fptr, char *new,int *line, int *col)
         *line = -1;}
     return *col;
 }
-void editc(){
+void edit_customer(){
     //                                              DISPLAYS CUSTOMER DETAILS
     int i=0;int n=0;char new[11];int yn=0,yna=0;
 	FILE *fp;
@@ -256,7 +256,7 @@ void editc(){
                 scanf("%d",&yn);
                 switch (yn)
                 {
-                case 1: createc();
+                case 1: create_customer();
                     break;
                 
                 default:
@@ -265,7 +265,7 @@ void editc(){
         case 2: printf("\tDisplaying Details\n\n");
                 printf("\t----------------------------\n");
                 printf("\tMobile__No|Customer___Name\n");
-                existc(new);    
+                customer_exists(new);    
                 printf("\n\t Enter Any Key To Proceed");
                 fflush(stdin);
                 getch();
@@ -278,7 +278,7 @@ void editc(){
 	fclose(fp);
 	
 }
-int existc(char new[11])
+int customer_exists(char new[11])
 { //                                      CHECKING FOR CUSTOMER IN FILE
     FILE *fptr;
     int line, col;
@@ -332,7 +332,7 @@ int indexOf2(FILE *fptr, const char *NEW, int *line, int *col)
     return *col;
 }
 
-void createi()
+void create_item()
 {	//                                      CREATES ITEM
     int in=0,ynn=0;char newi[8];
 	FILE *fp,*fp2,*fp3,*fp4;
@@ -378,7 +378,7 @@ void createi()
               switch (ynn)
               {
               case 1:
-                    updi(newi);  
+                    update_item(newi);  
                     printf("\tRecord is Updated\n\n");
                   break;
               case 2:break;
@@ -427,7 +427,7 @@ int indexOfi(FILE *fptr,char *newi,int *line, int *col)
         *line = -1;}
     return *col;
 }
-void updi(char newi[8])
+void update_item(char newi[8])
 {   //                                          UPDATING ITEM DETAILS
     FILE *fptr,*fptr2,*fptr3,*fptr4;    
     int line, col,y3;
@@ -451,11 +451,11 @@ void updi(char newi[8])
     scanf("%d",&y3);
     switch (y3)
     {
-    case 1: iname(line);
+    case 1: item_name(line);
         break;
-    case 2: iquan(line);
+    case 2: item_quantity(line);
         break;
-    case 3: iprice(line);
+    case 3: item_price(line);
         break;
     default:
         break;
@@ -481,7 +481,7 @@ int indexOfi2(FILE *fptr, char *newi,int *line, int *col)
         *line = -1;}
     return *col,*line;
 }
-void iname(int line)
+void item_name(int line)
 {//                                               UPDATING NAME
     char s[1000],f[100]="INAME.txt",c;
     FILE *fptr, *f1ptr;
@@ -530,7 +530,7 @@ void iname(int line)
    fclose(target);
    remove("temp.txt");
 }
-void iquan(int line)
+void item_quantity(int line)
 {//                                                 UPDATNG QUANTITY
     char s[1000],f[100]="IQ.txt",c;
     FILE *fptr, *f1ptr;
@@ -577,7 +577,7 @@ void iquan(int line)
    fclose(target);
    remove("temp.txt");
 }
-void iprice(int line)
+void item_price(int line)
 {//                                                 UPDATING PRICE
     char s[1000],f[100]="IP.txt",c;
     FILE *fptr, *f1ptr;
@@ -664,7 +664,7 @@ int bill(int k)
         existi2(i,k);
     }
     else
-    {   editc();
+    {   edit_customer();
         float dis;
         printf("\tWANNA ADD DISCOUNT(add in %% 0 for NO): ");
         scanf("%f",&dis);
